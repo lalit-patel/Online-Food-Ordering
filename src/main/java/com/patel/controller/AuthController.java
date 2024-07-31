@@ -88,7 +88,9 @@ public class AuthController {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         String role = authorities.isEmpty()?null:authorities.iterator().next().getAuthority();
 
-        String jwt = jwtProvider.getEmailFromJwtToken(String.valueOf(authentication));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = jwtProvider.generateToken(authentication);
         AuthResponse authResponse = new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("Login Succesfull");
@@ -102,7 +104,7 @@ public class AuthController {
         UserDetails userDetails = customerUserDetailsService.loadUserByUsername(userName);
 
         if (userDetails == null) {
-            throw new BadCredentialsException("Invalid username...");
+            throw new BadCredentialsException("Invalid email...");
         }
         if (!passwordEncoder.matches(password, userDetails.getPassword())){
             throw new BadCredentialsException("Invalid password...");

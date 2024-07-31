@@ -1,5 +1,6 @@
 package com.patel.dto;
 
+import com.patel.model.Address;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;

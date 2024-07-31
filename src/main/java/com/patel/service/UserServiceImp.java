@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 public class UserServiceImp implements UserService{
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
+    @Autowired
     private JwtProvider jwtProvider;
     @Override
     public User findUserByJwtToken(String jwt) throws Exception {
@@ -28,4 +29,5 @@ public class UserServiceImp implements UserService{
         if (user == null) throw new Exception("User not found");
         return user;
     }
+
 }
